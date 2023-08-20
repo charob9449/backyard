@@ -1,28 +1,53 @@
 import React, { Component } from "react";
 import './App.css';
 import pic2 from './Screenshot 2023-07-12 at 3.01.07 PM (1).png'
-
+import pic1 from './drinks.jpg'
+import pic3 from './Backyardpic (1).jpg'
+import pic4 from './backyard.jpg'
 class NightLounge extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentSlide: 0,
+    };
+  }
+
   componentDidMount() {
-    // Add scroll event listener
-    window.addEventListener("scroll", this.handleScroll);
+    this.startSlideshow();
   }
 
   componentWillUnmount() {
-    // Remove scroll event listener when component unmounts
-    window.removeEventListener("scroll", this.handleScroll);
+    this.stopSlideshow();
   }
 
-  handleScroll = () => {
-    // Calculate the position of the images
-    const imageElements = document.querySelectorAll(".fade-in");
-    imageElements.forEach(image => {
-      const imageTop = image.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-      if (imageTop < windowHeight) {
-        image.classList.add("fade-in-visible");
+  startSlideshow = () => {
+    this.slideInterval = setInterval(() => {
+      this.showSlide(this.state.currentSlide + 1);
+    }, 4000); // Change slide every 4 seconds (adjust as needed)
+  }
+
+  stopSlideshow = () => {
+    clearInterval(this.slideInterval);
+  }
+
+  showSlide = (slideIndex) => {
+    const slides = document.querySelectorAll(".slide-fade");
+    if (slideIndex >= slides.length) {
+      slideIndex = 0;
+    }
+    if (slideIndex < 0) {
+      slideIndex = slides.length - 1;
+    }
+
+    slides.forEach((slide, index) => {
+      if (index === slideIndex) {
+        slide.style.display = "block";
+      } else {
+        slide.style.display = "none";
       }
     });
+
+    this.setState({ currentSlide: slideIndex });
   }
 
   render() {
@@ -31,16 +56,10 @@ class NightLounge extends Component {
         <section className="custom-section-container">
           <div className="custom-content-box">
             <div className="bay-window-slider">
-              <img src={pic2} alt="Back Yard" className="fade-in" id="monday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="tuesday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="wednesday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="thursday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="friday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="monday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="tuesday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="wednesday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="thursday" />
-              <img src={pic2} alt="Back Yard" className="fade-in" id="friday" />
+              <img src={pic2} alt="Back Yard" className="slide-fade" id="monday" />
+              <img src={pic1} alt="Back Yard" className="slide-fade" id="tuesday" />
+              <img src={pic3} alt="Back Yard" className="slide-fade" id="wednesday" />
+              <img src={pic4} alt="Back Yard" className="slide-fade" id="thursday" />
             </div>
           </div>
         </section>

@@ -147,6 +147,25 @@
   overflow-x: scroll;
 }
 
+.slideshow-container {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.slide-fade {
+  display: none;
+  width: 10%;
+  position: absolute;
+  animation: fade 4s linear infinite;
+  margin-left: 22cm;
+}
+
+@keyframes fade {
+  0%, 100% { opacity: 0; }
+  25%, 75% { opacity: 1; }
+}
+
 .fade-in {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
